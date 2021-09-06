@@ -1,17 +1,29 @@
 <template>
-  <div class="box" ref="box">
-  
-  </div>
+  <div class="box" ref="box"></div>
 </template>
 
 <script>
-import { Scene, WebGLRenderer, PerspectiveCamera, BoxGeometry, MeshBasicMaterial, Mesh } from 'three';
+import {
+  Scene,
+  WebGLRenderer,
+  PerspectiveCamera,
+  BoxGeometry,
+  MeshBasicMaterial,
+  Mesh,
+} from "three";
+import { WEBGL } from "three/examples/jsm/WebGL.js";
 
 export default {
-  name: 'HelloWorld',
+  name: "HelloWorld",
   props: {},
   mounted() {
-    this.render();
+    if (WEBGL.isWebGLAvailable()) {
+      // Initiate function or other initializations here
+      this.render();
+    } else {
+      const warning = WEBGL.getWebGLErrorMessage();
+      this.$refs.box.appendChild(warning);
+    }
   },
   methods: {
     render() {
@@ -35,12 +47,12 @@ export default {
         requestAnimationFrame(animate);
         cube.rotation.x += 0.01;
         cube.rotation.y += 0.01;
-        renderer.render(scene, camera)
+        renderer.render(scene, camera);
       }
-      animate()
-    }
-  }
-}
+      animate();
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
